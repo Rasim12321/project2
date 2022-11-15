@@ -4,7 +4,6 @@ import { BrowserRouter, Router, Routes, Route, Link } from "react-router-dom";
 import { store } from "./store";
 
 import Page1 from "./containers/page1";
-import Page2 from "./containers/page2";
 import Nav_bar from "./components/navbar";
 import ErrorComponent from "./components/error";
 
@@ -19,7 +18,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Page1 />} />
-          <Route path="/page2" element={<Page2 />} />
           <Route path="*" element={<ErrorComponent />} />
         </Routes>
       </BrowserRouter>
