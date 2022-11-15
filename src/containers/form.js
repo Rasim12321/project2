@@ -1,42 +1,56 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
 import ErrorComponent from "../components/error";
 import LoadingSpinner from "../components/loading";
 import { setData } from "../store/actions/info.actions";
+import { useState } from "react";
 
 function FormInputs() {
-  const firstName = React.createRef();
-  const lastName = React.createRef();
-  const age = React.createRef();
-  const male = React.createRef();
-  const female = React.createRef();
-  const bussiness = React.createRef();
-  const organization = React.createRef();
-  const password = React.createRef();
-  const country = React.createRef();
-  const agreement = React.createRef();
+  const [name, setName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [age, setAge] = useState("");
+  const [sex, setSex] = useState("");
+  const [email, setEmail] = useState("");
+  const [organization, setOrganization] = useState("");
+  const [password, setPassword] = useState("");
+  const [country, setCountry] = useState("Russia");
+  const [agreement, setAgreement] = useState("");
+
   const button = React.createRef();
+  const agr = React.createRef();
 
   const dispatch = useDispatch();
   const info = useSelector((state) => state.info);
   const countries = useSelector((state) => state.countries);
   const isLoading = useSelector((state) => state.loading);
-
+  const data = {
+    name: name,
+    lastName: lastName,
+    age: age,
+    sex: sex,
+    email: email,
+    organization: organization,
+    password: password,
+    country: country,
+  };
   const change = () => {
-    console.log("run");
+    console.log(agreement);
     if (
-      firstName.current.value != "" &&
-      lastName.current.value != "" &&
-      age.current.value != "" &&
-      (male.current.checked || female.current.checked) &&
-      bussiness.current.value != "" &&
-      organization.current.value != "" &&
-      password.current.value != "" &&
-      country.current.value != "" &&
-      agreement.current.checked
+      agr.current.checked &&
+      name != "" &&
+      lastName != "" &&
+      age != "" &&
+      sex != "" &&
+      email != "" &&
+      organization != "" &&
+      password != "" &&
+      country != ""
     ) {
+      dispatch(setData(data));
+
       button.current.disabled = false;
     } else {
       button.current.disabled = true;
@@ -45,23 +59,11 @@ function FormInputs() {
 
   const submit = (event) => {
     event.preventDefault();
-
-    const data = {
-      firstName: firstName.current.value,
-      lastName: lastName.current.value,
-      age: age.current.value,
-      sex: male.current.checked ? male.current.id : female.current.id,
-      bussiness: bussiness.current.value,
-      organization: organization.current.value,
-      password: password.current.value,
-      country: country.current.value,
-    };
-    dispatch(setData(data));
-    console.log(info);
+    // console.log(info);
   };
 
   return (
-    <Form onSubmit={submit}>
+    <Form onSubmit={submit} onChange={change}>
       <h3 className="text-center">Take scoutbees for a spin</h3>
       <p className="text-center">
         Free 14 days triat of the Enterprise edition of the Scoutbees. No credit
@@ -70,11 +72,7 @@ function FormInputs() {
       <hr />
 
       <div className="d-flex">
-        <Form.Group
-          className="mb-3"
-          controlId="formBasicFirstName"
-          onChange={change}
-        >
+        <Form.Group className="mb-3" controlId="formBasicFirstName">
           <Form.Label>
             <b> First name</b>
           </Form.Label>
@@ -82,8 +80,8 @@ function FormInputs() {
             type="text"
             name="name"
             placeholder="Enter first name"
-            ref={firstName}
-            onChange={change}
+            onChange={(event) => setName(event.target.value)}
+            value={name}
           />
         </Form.Group>
 
@@ -94,8 +92,8 @@ function FormInputs() {
           <Form.Control
             type="text"
             placeholder="Enter last name"
-            ref={lastName}
-            onChange={change}
+            onChange={(event) => setLastName(event.target.value)}
+            value={lastName}
           />
         </Form.Group>
       </div>
@@ -108,31 +106,22 @@ function FormInputs() {
           <Form.Control
             type="number"
             placeholder="Your age"
-            ref={age}
-            onChange={change}
+            onChange={(event) => setAge(event.target.value)}
+            value={age}
           />
         </Form.Group>
 
-        <Form.Group className="mx-5" controlId="formBasicSex">
+        <Form.Group
+          className="mx-5"
+          controlId="formBasicSex"
+          onChange={(event) => setSex(event.target.id)}
+          value={sex}
+        >
           <Form.Label className="ml-10">
             <b> Sex</b>
           </Form.Label>
-          <Form.Check
-            name="sex"
-            type="radio"
-            id="male"
-            label="male"
-            ref={male}
-            onChange={change}
-          />
-          <Form.Check
-            name="sex"
-            type="radio"
-            id="female"
-            label="female"
-            ref={female}
-            onChange={change}
-          />
+          <Form.Check name="sex" type="radio" id="male" label="male" />
+          <Form.Check name="sex" type="radio" id="female" label="female" />
         </Form.Group>
       </div>
 
@@ -143,8 +132,8 @@ function FormInputs() {
         <Form.Control
           type="email"
           placeholder="Enter email"
-          ref={bussiness}
-          onChange={change}
+          onChange={(event) => setEmail(event.target.value)}
+          value={email}
         />
         <Form.Text className="text-muted">
           We'll never share your email with anyone else.
@@ -158,8 +147,8 @@ function FormInputs() {
         <Form.Control
           type="text"
           placeholder="Organization name"
-          ref={organization}
-          onChange={change}
+          onChange={(event) => setOrganization(event.target.value)}
+          value={organization}
         />
       </Form.Group>
 
@@ -170,15 +159,19 @@ function FormInputs() {
         <Form.Control
           type="password"
           placeholder="Password"
-          ref={password}
-          onChange={change}
+          onChange={(event) => setPassword(event.target.value)}
+          value={password}
         />
         <Form.Text className="text-muted">
           We'll never share your password with anyone else.
         </Form.Text>
       </Form.Group>
 
-      <Form.Select aria-label="Default select example" ref={country}>
+      <Form.Select
+        aria-label="Default select example"
+        onChange={(event) => setCountry(event.target.value)}
+        value={country}
+      >
         <option>Russia</option>
         {countries.map((item, index) => {
           return (
@@ -195,8 +188,9 @@ function FormInputs() {
           label="Agree to terms and conditions"
           feedback="You must agree before submitting."
           feedbackType="invalid"
-          ref={agreement}
-          onChange={change}
+          onChange={(event) => setAgreement(event.target.checked)}
+          value={agreement}
+          ref={agr}
         />
       </Form.Group>
 
@@ -204,10 +198,12 @@ function FormInputs() {
         className="d-block m-auto"
         variant="danger"
         type="submit"
-        ref={button}
         disabled
+        ref={button}
       >
-        Submit
+        <Link to={"/page2"} className="text-white text-decoration-none ">
+          Submit
+        </Link>
       </Button>
     </Form>
   );

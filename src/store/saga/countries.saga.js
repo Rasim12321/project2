@@ -12,10 +12,10 @@ function* countriesWorker() {
     const countries = [];
     yield data.map((item) => countries.push(item.name.common));
     yield put(setCountries(countries));
-    yield put(setLoading(false));
   } catch (error) {
-    yield put(setLoading(false));
     yield put(setCountries(null));
+  } finally {
+    yield put(setLoading(false));
   }
 }
 

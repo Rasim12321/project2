@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ErrorComponent from "../components/error";
 import List from "../components/list";
 import LoadingSpinner from "../components/loading";
+
 import { fetchCountries } from "../store/actions/countries.actions";
 import FormInputs from "./form";
 export default function Page1() {
@@ -13,6 +14,7 @@ export default function Page1() {
   useEffect(() => {
     dispatch(fetchCountries());
   }, []);
+  console.log(isLoading);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -20,8 +22,7 @@ export default function Page1() {
 
   if (countries == null) {
     return <ErrorComponent />;
-  }
-  if (countries != null) {
+  } else {
     return (
       <>
         <div className="first-page ">
