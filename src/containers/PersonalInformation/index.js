@@ -2,14 +2,12 @@ import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import TableInfo from "../components/table";
+import TableInfo from "./table";
 
-export default function Page2() {
+export default function PersonInformation() {
   const info = useSelector((state) => state.info);
-  const countries = useSelector((state) => state.countries);
   const navigate = useNavigate();
 
-  console.log(info);
   return (
     <>
       <TableInfo info={info} />;

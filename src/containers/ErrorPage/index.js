@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 
-export default function ErrorComponent() {
+export default function ErrorPage() {
   const [show, setShow] = useState(true);
 
   if (show) {
@@ -19,5 +19,3 @@ export default function ErrorComponent() {
   }
   return <Button onClick={() => setShow(true)}>Show Alert</Button>;
 }
-
-// render(<AlertDismissibleExample />);

@@ -1,11 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+
 import { useDispatch, useSelector } from "react-redux";
-import ErrorComponent from "../components/error";
-import LoadingSpinner from "../components/loading";
-import { setData } from "../store/actions/info.actions";
+import { setData } from "../../store/actions/info.actions";
 import { useState } from "react";
 
 function FormInputs() {
@@ -18,14 +18,10 @@ function FormInputs() {
   const [password, setPassword] = useState("");
   const [country, setCountry] = useState("Russia");
   const [agreement, setAgreement] = useState("");
-
-  const button = React.createRef();
-  const agr = React.createRef();
+  let navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const info = useSelector((state) => state.info);
   const countries = useSelector((state) => state.countries);
-  const isLoading = useSelector((state) => state.loading);
   const data = {
     name: name,
     lastName: lastName,
@@ -36,34 +32,27 @@ function FormInputs() {
     password: password,
     country: country,
   };
-  const change = () => {
-    console.log(agreement);
-    if (
-      agr.current.checked &&
-      name != "" &&
-      lastName != "" &&
-      age != "" &&
-      sex != "" &&
-      email != "" &&
-      organization != "" &&
-      password != "" &&
-      country != ""
-    ) {
-      dispatch(setData(data));
-
-      button.current.disabled = false;
-    } else {
-      button.current.disabled = true;
-    }
-  };
 
   const submit = (event) => {
     event.preventDefault();
-    // console.log(info);
+
+    dispatch(setData(data));
+    navigate("/PersonInformation");
   };
 
+  const isBtnDisabled =
+    !name ||
+    !lastName ||
+    !age ||
+    !sex ||
+    !email ||
+    !organization ||
+    !password ||
+    !country ||
+    !agreement;
+
   return (
-    <Form onSubmit={submit} onChange={change}>
+    <Form onSubmit={submit}>
       <h3 className="text-center">Take scoutbees for a spin</h3>
       <p className="text-center">
         Free 14 days triat of the Enterprise edition of the Scoutbees. No credit
@@ -104,6 +93,7 @@ function FormInputs() {
             <b> Age</b>
           </Form.Label>
           <Form.Control
+            min={16}
             type="number"
             placeholder="Your age"
             onChange={(event) => setAge(event.target.value)}
@@ -190,20 +180,16 @@ function FormInputs() {
           feedbackType="invalid"
           onChange={(event) => setAgreement(event.target.checked)}
           value={agreement}
-          ref={agr}
         />
       </Form.Group>
 
       <Button
+        disabled={isBtnDisabled}
         className="d-block m-auto"
         variant="danger"
         type="submit"
-        disabled
-        ref={button}
       >
-        <Link to={"/page2"} className="text-white text-decoration-none ">
-          Submit
-        </Link>
+        Submit
       </Button>
     </Form>
   );

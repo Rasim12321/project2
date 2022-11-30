@@ -1,8 +1,6 @@
-import { Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 
 function TableInfo(props) {
-  console.log(props.info);
   return (
     <div>
       <Table striped bordered hover className="w-50 mt-50 mx-auto">
