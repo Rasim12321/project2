@@ -1,0 +1,87 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.form{
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 450px;
+    padding: 20px;
+
+    background-color: rgb(200, 222, 255);
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: grey 0px 0px 20px 2px;
+}
+
+.inputArea{
+    height: 85px;
+    /* border: 1px solid black; */
+}
+.inputAreaRadio{
+    height: 85px;
+    width: 200px;
+    border: 1px solid black;
+
+}
+
+.input{
+    width: 400px;
+    height: 30px;
+    border-radius: 7px;
+    border: 0.1px solid grey;
+
+}
+
+.inputShort{
+    width: 190px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 7px;
+    border: 0.1px solid grey;
+
+}
+
+.input
+.inputShort :focus{
+    border: 1px solid rgb(111, 154, 254);
+}
+
+.inputCheckbox{
+    height: 75px;
+    margin-top: 5px;
+}
+
+
+.flex{
+    display: flex;
+    margin-right: 20px;
+}
+
+.label{
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.error{
+    color: red;
+    margin: 0;
+
+}
+
+.button{
+    display: block;
+    margin: auto;
+    background-color: rgb(255, 128, 128);
+    width: 100px;
+    height: 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px 0.2px;
+}
+.button :active{
+    box-shadow: 0 0 0px 0px;
+    width: 90px;
+    height: 45px;
+}
